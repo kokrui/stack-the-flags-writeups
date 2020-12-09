@@ -1,9 +1,15 @@
 # Version
 
+## Breaking down the challenge
+
 > It was observed that the Korovax Mobile App distributed to the citizens is the v1.0 release candidate. This first build seems to be broadcasting some message to connect to other smart watch devices. Find out what is this message!
 
 We were given a pcap file to analyze for this challenge. Reading the challenge description further will tell us that the Korovax Mobile App is broadcasting some message to connect with other devices, so we will have to find out how they are broadcasting this message, and then what they were broadcasting. 
-Opening up the pcap file we will see some HCI_EVT, HCI_CMD and ATT protocol packets. Alright, so there are bluetooth messages being sent, now to analyze the packets to find some blue. 
+Opening up the pcap file we will see some HCI_EVT, HCI_CMD and ATT protocol packets.  
+Alright, so there are bluetooth messages being sent, now to analyze the packets to find some hints. 
+
+## PCAP Static Analysis
+ 
 Scrolling through the packets will yield these hints placed in some of them. 
 
 > secretsecret
@@ -28,10 +34,13 @@ The few website we haven't visited yet are (https://csgctf.wordpress.com/in-your
 
 Alright, so "In your dreams, Alfred." is the key to decrypting the flag (probably). 
  
+## APK Static Analysis
+
 After we have finished analyzing the pcap file we should move onto the apk file to check out what is going on. Since we know what we are looking for, which is the BLE logic, finding out the appropriate file to analyze is pretty easy, which was MainActivity.java.
 Most of the BLE logic was standard, and only some variables stood out.  
 
 > CHARACTERISTIC UUID : 00002A27-0000-1000-8000-00805F9B34FB
+
 > SERVICE_UUID : 00001826-0000-1000-8000-00805F9B34FB
 
 This characteristic UUID and service UUID led us to a [Garmin fitness machine](https://forums.garmin.com/developer/connect-iq/f/app-ideas/206704/developing-a-ciq-ble-client-for-treadmill-and-fitness-equipment) 
@@ -64,6 +73,8 @@ Gathering all the flags will give me :
 
 > 22 5e 52 36 19 35 2a 1c 57 06 17 21 0e 16 07 4f 26 5f 16 07 4f 26 5f 12 1a 20 16 24
 
+## Decoding the flag
+
 A hex string, but what to do with it?
 
 With this string and "In your dreams, Alfred." I was stuck on how to continue, since I could not find any hints on the cipher, if there were any.  
@@ -77,7 +88,9 @@ Oh? Have I finally found the flag? Excitedly I put govtech-csg{k0rOv@X<3tr@ce+og
 Looking closer I saw that the ending few characters were wrong, since the last word was "together".  
 And once again I was stuck on what the problem was, and the CTF ended :)... Ouch.  
 
-Trying to figure out the flag after the CTF yielded nothing too, and after asking the admin for the flag we got : 
+## Post CTF thoughts
+
+Trying to figure out what the problem was and the actual flag after the CTF yielded nothing too, and after asking the admin for the flag we got : 
 > govtech-csg{k0rOv@X<3tr@ce+og3thEr}
 
 I'm pretty sure the challenge was broken, since reverse XOR-ing that with the encoded flag gave back  
