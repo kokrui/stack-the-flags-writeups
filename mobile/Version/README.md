@@ -66,7 +66,8 @@ public void onCharacteristicReadRequest(BluetoothDevice device, int requestId, i
         }
 ```
 
-The last piece of code that stood out was the onCharacteristicReadRequest() method. We can see that as other machines send a characteristic read request the app increases its counter and sends a piece of "masterFlag" as a response. What I did was to decode the messages directly and get the full message, but I don't think we were originally supposed to be able to decode the obfuscated messages. 
+The last piece of code that stood out was the onCharacteristicReadRequest() method. We can see that as other machines send a characteristic read request the app increases its counter and sends a piece of "masterFlag" as a response.  
+What I did was to decode the messages directly and get the full message, but I don't think we were originally supposed to be able to decode the obfuscated messages.  
 In case we were not able to decode the message directly from the apk what we could have done was to run the app on my phone, run the bluetooth logic by clicking the "Discover" button, using another device to connect to, and send read requests to it. There are several apps that can send read requests easily but luckily I didn't have to do that. 
 
 Gathering all the flags will give me : 
