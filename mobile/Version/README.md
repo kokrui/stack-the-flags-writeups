@@ -104,3 +104,17 @@ XOR-ing with the key yields :
 
 which was missing some chunks of the original encoded flag.  
 
+
+## Post Post CTF thoughts
+
+After asking the admins on how to finish the challenge we were supposed to identify that since our key was 23 characters long, our ciphertext should be too.  
+Afterwards you had to re-analyze the ciphertext and see that there is a chunk of repeated data. 
+
+> 16 07 4f 26 5f 16 07 4f 26 5f
+
+See this repeated chunk you had to remove the excess, which cuts the ciphertext down to the suitable 23 characters.  
+XOR-ing this with the key will yield 
+> govtech-csg{k0rOv@X<3tr@ce+og3thEr}
+
+Honestly I wouldn't have been so confused if it was hinted someway or another that re-analyzing the ciphertext was needed, since the full "corrupted" ciphertext did come from the app.  
+Oh well, what can you do.
